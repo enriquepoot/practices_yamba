@@ -16,7 +16,8 @@ public class StatusActivity extends Activity implements OnClickListener {
 	Twitter twitter;
 	
     /** Called when the activity is first created. */
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.status);
@@ -31,6 +32,7 @@ public class StatusActivity extends Activity implements OnClickListener {
         twitter.setAPIRootUrl("http://yamba.marakana.com/api");
     }
 
+	@SuppressWarnings("static-access")
 	public void onClick(View v) {
 		this.twitter.setStatus(this.editText.getText().toString());
 		Log.d(this.TAG, "onClicked");
