@@ -6,5 +6,10 @@
     <string name="titleStatus">Status Update</string>
     <string name="buttonUpdate">Update</string>
     <string name="statusHint">Please enter your 140-character status</string>
+    <string name="titleUsername">User Name</string>
+    <string name="titlePassword">Password</string>
+    <string name="titleApiRoot">API Root</string>
+    <string name="summaryUsername">User session name</string>
+    <string name="titlePrefs">Preferences</string>
 
 </resources>
