@@ -12,6 +12,15 @@
         android:layout_margin="10dp"
         android:text="@string/titleStatus"
         android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/textCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:text="000" />
 
     <EditText
         android:id="@+id/editText"
