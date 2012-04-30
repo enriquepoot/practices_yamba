@@ -4,9 +4,12 @@ import winterwell.jtwitter.Twitter;
 import winterwell.jtwitter.TwitterException;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,16 +23,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class StatusActivity extends Activity implements OnClickListener, TextWatcher {
+public class StatusActivity extends Activity implements OnClickListener, TextWatcher, OnSharedPreferenceChangeListener {
 	private static final String TAG = "StatusActivity";
 	EditText editText;
 	Button updateButton;
 	Twitter twitter;
 	TextView textCount;
+	SharedPreferences prefs;
 	
     /** Called when the activity is first created. */
-    @SuppressWarnings("deprecation")
-	@Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.status);
@@ -46,8 +49,9 @@ public class StatusActivity extends Activity implements OnClickListener, TextWat
         
         this.editText.addTextChangedListener(this);
         
-        this.twitter = new Twitter("student","password");
-        twitter.setAPIRootUrl("http://yamba.marakana.com/api");
+        //Setup preferences
+        this.prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        this.prefs.registerOnSharedPreferenceChangeListener(this);        
     }
 
     //Called when button is clicked
@@ -63,7 +67,7 @@ public class StatusActivity extends Activity implements OnClickListener, TextWat
 		@Override
 		protected String doInBackground(String... statuses) {
 			try{
-				winterwell.jtwitter.Status status = twitter.updateStatus(statuses[0]);
+				winterwell.jtwitter.Status status = getTwitter().updateStatus(statuses[0]);
 				return status.text;
 			}catch(TwitterException ex){
 				Log.e(TAG, ex.toString());
@@ -121,5 +125,26 @@ public class StatusActivity extends Activity implements OnClickListener, TextWat
 			break;
 		}
 		return true;
+	}
+
+	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+		// TODO Auto-generated method stub
+		//Invalidate twitter object
+		this.twitter = null;
+	}
+	
+	@SuppressWarnings("deprecation")
+	private Twitter getTwitter(){
+		if(this.twitter == null){
+			String username, password, apiRoot;
+			username = prefs.getString("username", "");
+			password = prefs.getString("password", "");
+			apiRoot = prefs.getString("apiRoot", "http://yamba.marakana.com/api");
+			
+			//Connect to twitter.com
+			this.twitter = new Twitter(username, password);
+			this.twitter.setAPIRootUrl(apiRoot);
+		}
+		return this.twitter;
 	}
 }
