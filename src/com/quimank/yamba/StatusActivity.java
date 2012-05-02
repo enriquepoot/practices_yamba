@@ -137,9 +137,9 @@ public class StatusActivity extends Activity implements OnClickListener, TextWat
 	private Twitter getTwitter(){
 		if(this.twitter == null){
 			String username, password, apiRoot;
-			username = prefs.getString("username", "");
-			password = prefs.getString("password", "");
-			apiRoot = prefs.getString("apiRoot", "http://yamba.marakana.com/api");
+			username = prefs.getString("username", "studenttwitter");
+			password = prefs.getString("password", "password");
+			apiRoot = prefs.getString("apiRoot", "http://identi.ca/api");
 			
 			//Connect to twitter.com
 			this.twitter = new Twitter(username, password);
