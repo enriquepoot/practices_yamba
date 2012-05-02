@@ -11,5 +11,7 @@
     <string name="titleApiRoot">API Root</string>
     <string name="summaryUsername">User session name</string>
     <string name="titlePrefs">Preferences</string>
+    <string name="summaryPassword">User\'s password</string>
+    <string name="summaryApiRoot">The RESTfull api endpoint</string>
 
 </resources>
